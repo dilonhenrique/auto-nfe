@@ -1,1 +1,86 @@
-@import "tailwindcss";
+@tailwind base;
+
+svg[data-logo]>*[fill] {
+  @apply fill-current;
+}
+
+svg[role=icon] {
+  @apply outline-none;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ::selection {
+    @apply bg-primary text-white;
+  }
+
+  /* h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-foreground-800;
+  } */
+
+  h1 {
+    @apply text-title-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-title-2xl font-bold;
+  }
+
+  h3 {
+    @apply text-title-xl font-bold;
+  }
+
+  /* h1.display {
+    @apply text-display-lg;
+  }
+
+  h2.display {
+    @apply text-display-md;
+  }
+
+  h3.display {
+    @apply text-display-sm;
+  } */
+
+  h4 {
+    @apply text-title-lg font-bold;
+  }
+
+  h5 {
+    @apply text-title-md font-bold;
+  }
+
+  h6 {
+    @apply text-title-sm font-bold;
+  }
+
+  a:not([role]):not(.underline) {
+    @apply text-primary font-semibold;
+  }
+
+  /* .text-display-lg,
+  .text-display-md,
+  .text-display-sm {
+    @apply font-michroma;
+  } */
+
+  /* Works on Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-width: 8px;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+}
