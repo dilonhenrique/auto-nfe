@@ -1,7 +1,0 @@
-registry=https://registry.npmjs.org/
-@abstrato:registry=https://pkgs.dev.azure.com/abstratoventures/_packaging/abstratoventures/npm/registry/
-always-auth=true
-
-//pkgs.dev.azure.com/abstratoventures/_packaging/abstratoventures/npm/:username=${NPM_AZURE_USERNAME}
-//pkgs.dev.azure.com/abstratoventures/_packaging/abstratoventures/npm/:email=${NPM_AZURE_EMAIL}
-//pkgs.dev.azure.com/abstratoventures/_packaging/abstratoventures/npm/:_password=${NPM_AZURE_TOKEN_BASE64}
