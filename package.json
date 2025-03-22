@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "envsubst < .npmrc.template > .npmrc && cat .npmrc",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
