@@ -5,7 +5,7 @@ import { InvoiceUser } from "@/types/invoice";
 
 export default async function login(user: InvoiceUser) {
   const emitter = await new InvoiceEmitter().init();
-  await emitter.login(user);
+  const success = await emitter.login(user);
 
-  return { success: true };
+  return { success };
 }

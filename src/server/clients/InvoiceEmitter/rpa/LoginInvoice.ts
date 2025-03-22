@@ -19,7 +19,19 @@ export class LoginInvoice {
 
   private async clickSubmit() {
     await this.page.locator("button[type=submit]").click();
-    // await this.page.waitForNavigation();
+  }
+
+  private async checkIsLogged() {
+    return new Promise<boolean>((resolve) => {
+      this.page
+        .locator(".alert-warning ::-p-text(Usuário e/ou senha inválidos)")
+        .wait()
+        .then(() => resolve(false));
+      this.page
+        .locator(".navbar-brand.completa")
+        .wait()
+        .then(() => resolve(true));
+    });
   }
 
   public async execute(user: InvoiceUser) {
@@ -30,6 +42,6 @@ export class LoginInvoice {
     await this.page.locator("input[name=Senha]").fill(user.password);
 
     await this.clickSubmit();
-    console.log("✅ Login efetuado");
+    return await this.checkIsLogged();
   }
 }

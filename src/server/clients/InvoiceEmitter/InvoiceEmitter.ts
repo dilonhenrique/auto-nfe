@@ -24,7 +24,7 @@ export class InvoiceEmitter {
   public async login(user: InvoiceUser) {
     const page = this.automation.getPage();
 
-    await new LoginInvoice(page).execute(user);
+    return await new LoginInvoice(page).execute(user);
   }
 
   public async generate(data: InvoiceData) {
