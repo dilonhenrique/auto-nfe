@@ -1,7 +1,8 @@
 "use client";
 
-import { Form, Input, Spinner } from "@abstrato/hero-ui";
-import { useSession } from "next-auth/react";
+import { Button, Form, Input, Spinner } from "@abstrato/hero-ui";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { z } from "zod";
 
 export default function Page() {
@@ -17,6 +18,11 @@ export default function Page() {
       <Form schema={z.object({ senha: z.string().min(8) })}>
         <Input name="senha" label="Senha" />
       </Form>
+
+      <Button as={Link} href="/dashboard">
+        Entrar
+      </Button>
+      <Button onPress={() => signOut({ redirect: false })}>Sair</Button>
     </main>
   );
 }
