@@ -27,10 +27,10 @@ yarn-error.log*
 
 # local env files
 .env*
-.npmrc
+# .npmrc
 
 # vercel
-# .vercel
+.vercel
 
 # typescript
 *.tsbuildinfo
