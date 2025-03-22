@@ -4,47 +4,24 @@ import { invoiceActions } from "@/server/actions/invoice";
 import { invoiceUserSchema } from "@/utils/schemas/invoiceUser";
 import {
   addToast,
-  Button,
   Form,
-  Icon,
   Input,
   PasswordInput,
   SubmitButton,
-  User,
 } from "@abstrato/hero-ui";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
+import PageContainer from "../../ui/PageContainer/PageContainer";
 
-export default function Page() {
+export default function InvoiceEmitScreen() {
   const session = useSession();
   const user = session.data?.user;
 
   const [invoiceLogged, setInvoiceLogged] = useState(false);
 
   return (
-    <main className="flex flex-col gap-8 items-start p-8">
-      <h1>Ola, {user?.name?.split(" ")[0]}!</h1>
-
-      <div className="flex gap-4 items-center">
-        <User
-          avatarProps={{
-            src: user?.image ?? undefined,
-            name: user?.name ?? undefined,
-          }}
-          name={user?.name}
-          description={user?.email}
-        />
-
-        <Button
-          size="sm"
-          variant="light"
-          color="danger"
-          onPress={() => signOut()}
-          startContent={<Icon icon="log-out" size="sm" />}
-        >
-          Sair
-        </Button>
-      </div>
+    <PageContainer>
+      <h1>Olá, {user?.name?.split(" ")[0]}!</h1>
 
       {!invoiceLogged ? (
         <Form
@@ -80,6 +57,6 @@ export default function Page() {
           />
         </Form>
       )}
-    </main>
+    </PageContainer>
   );
 }

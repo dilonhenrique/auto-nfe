@@ -14,14 +14,16 @@ export default function UIProvider({ children, locale }: Props) {
       navigate={router.push}
       locale={locale}
       theme={{
-        button: { radius: "lg" },
+        button: { radius: "full" },
         field: { variant: "bordered" },
       }}
-      warningMessages={{
-        // formLeavePageWithoutSave: t("confirm_leave_without_save"),
-        // formParameterError: t("internal_server_error"),
-        // formServerError: t("invalid_parameters"),
-      }}
+      warningMessages={
+        {
+          // formLeavePageWithoutSave: t("confirm_leave_without_save"),
+          // formParameterError: t("internal_server_error"),
+          // formServerError: t("invalid_parameters"),
+        }
+      }
     >
       {children}
     </HeroUIProvider>
