@@ -7,6 +7,8 @@ import { InvoiceUser } from "@/types/invoice";
 import InvoiceLoginForm from "./InvoiceLoginForm";
 import InvoiceEmitForm from "./InvoiceEmitForm";
 import { AnimatePresence, motion } from "framer-motion";
+import { Card, CardBody, CardHeader, Checkbox } from "@abstrato/hero-ui";
+import NextFeaturesCard from "../../shared/NextFeaturesCard/NextFeaturesCard";
 
 export default function InvoiceEmitScreen() {
   const session = useSession({ required: true });
@@ -20,31 +22,35 @@ export default function InvoiceEmitScreen() {
     <PageContainer>
       <h1>Olá, {user?.name?.split(" ")[0]}!</h1>
 
-      <AnimatePresence initial={false} mode="popLayout">
-        {!loggedUser && (
-          <motion.div
-            key="login-form"
-            className="max-w-xl w-full"
-            initial={{ opacity: 0, x: "5rem" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "-5rem" }}
-          >
-            <InvoiceLoginForm user={user} setLoggedUser={setLoggedUser} />
-          </motion.div>
-        )}
+      <div className="flex flex-row flex-wrap items-start gap-8 w-full">
+        <AnimatePresence initial={false} mode="popLayout">
+          {!loggedUser && (
+            <motion.div
+              key="login-form"
+              className="max-w-xl w-full"
+              initial={{ opacity: 0, x: "5rem" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "-5rem" }}
+            >
+              <InvoiceLoginForm user={user} setLoggedUser={setLoggedUser} />
+            </motion.div>
+          )}
 
-        {loggedUser && (
-          <motion.div
-            key="emit-form"
-            className="max-w-xl w-full"
-            initial={{ opacity: 0, x: "5rem" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "-5rem" }}
-          >
-            <InvoiceEmitForm loggedUser={loggedUser} className="max-w-xl" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {loggedUser && (
+            <motion.div
+              key="emit-form"
+              className="max-w-xl w-full"
+              initial={{ opacity: 0, x: "5rem" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "-5rem" }}
+            >
+              <InvoiceEmitForm loggedUser={loggedUser} className="max-w-xl" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <NextFeaturesCard />
+      </div>
     </PageContainer>
   );
 }
