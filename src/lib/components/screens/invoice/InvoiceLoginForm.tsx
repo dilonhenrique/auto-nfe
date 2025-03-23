@@ -13,13 +13,13 @@ import {
 
 type Props = {
   user: SessionUser;
-  setLoggedUser: (user: InvoiceUser) => void;
+  onSuccess: (user: InvoiceUser) => void;
   className?: string;
 };
 
 export default function InvoiceLoginForm({
   user,
-  setLoggedUser,
+  onSuccess,
   className,
 }: Props) {
   return (
@@ -29,7 +29,7 @@ export default function InvoiceLoginForm({
       action={invoiceActions.login}
       onSuccess={(res) => {
         addToast({ title: res.message, color: "success" });
-        setLoggedUser(res.data);
+        onSuccess(res.data);
       }}
       onError={({ response }) => {
         addToast({ title: response?.message, color: "danger" });
