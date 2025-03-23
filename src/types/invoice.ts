@@ -10,7 +10,7 @@ export interface ReferenceDate {
 }
 
 export interface InvoiceData {
-  reference: ReferenceDate;
+  reference: Date;
   value: number;
   pix: string;
   cnpj: string;
@@ -21,7 +21,7 @@ export interface InvoiceData {
 }
 
 export type GenerateInvoicePeopleData = {
-  reference: string;
+  reference: Date;
   cnpj: string;
 };
 

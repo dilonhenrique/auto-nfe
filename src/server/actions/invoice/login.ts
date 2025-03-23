@@ -12,6 +12,6 @@ export default createAction({ schema: invoiceUserSchema }).execute(
 
     if (!response.success) throw new ActionException(ErrorCode.UNAUTHORIZED);
 
-    return response.success;
+    return user;
   }
 );

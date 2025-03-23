@@ -3,6 +3,7 @@ import {
   GenerateInvoicePeopleData,
   GenerateInvoiceServiceData,
 } from "@/types/invoice";
+import { parseBrazilDateStr } from "@/utils/parsers/brazilDateStr";
 import { Page } from "puppeteer";
 
 // const NF_URL =
@@ -49,7 +50,9 @@ export class GenerateInvoice {
   private async fillPeopleForm(data: GenerateInvoicePeopleData) {
     await this.page.goto(NF_URL, { waitUntil: "load" });
 
-    await this.page.locator("input[name=DataCompetencia]").fill(data.reference);
+    await this.page
+      .locator("input[name=DataCompetencia]")
+      .fill(parseBrazilDateStr(data.reference));
     await this.page.locator("form").click();
     await this.waitLoading();
 

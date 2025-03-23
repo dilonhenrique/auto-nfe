@@ -12,7 +12,6 @@ export abstract class InvoiceDownloader {
       "..",
       "..",
       "..",
-      "..",
       "downloads"
     );
     if (!fs.existsSync(this.downloadPath)) {

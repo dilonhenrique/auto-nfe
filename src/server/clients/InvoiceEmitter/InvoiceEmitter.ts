@@ -1,10 +1,8 @@
-import { InvoiceData, InvoiceUser } from "@/types/invoice";
+import { GenerateInvoiceData, InvoiceUser } from "@/types/invoice";
 import { InvoiceAutomation } from "./InvoiceAutomation";
 import { GenerateInvoice } from "./rpa/GenerateInvoice";
 import { EmitInvoice } from "./rpa/EmitInvoice";
 import { DownloadLastInvoice } from "./rpa/DownloadLastInvoice";
-import { createDescription } from "@/utils/invoice/createDescription";
-import { parseCurrency } from "@/utils/parsers/currency";
 import { LoginInvoice } from "./rpa/LoginInvoice";
 
 export class InvoiceEmitter {
@@ -27,24 +25,14 @@ export class InvoiceEmitter {
     return await new LoginInvoice(page).execute(user);
   }
 
-  public async generate(data: InvoiceData) {
+  public async generate(data: GenerateInvoiceData) {
     const page = this.automation.getPage();
 
     const process = new GenerateInvoice(page);
 
-    this.resume = await process.execute({
-      people: {
-        reference: data.reference.string,
-        cnpj: data.cnpj,
-      },
-      service: {
-        city: data.city,
-        description: createDescription(data),
-        tribNac: data.tribNac,
-        nbs: data.nbs,
-      },
-      value: parseCurrency(data.value),
-    });
+    this.resume = await process.execute(data);
+
+    return this.resume;
   }
 
   // public async askForApproval(): Promise<boolean> {
