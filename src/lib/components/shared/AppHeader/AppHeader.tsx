@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Icon, User } from "@abstrato/hero-ui";
+import { Button, Icon, Tooltip, User } from "@abstrato/hero-ui";
 import { signOut, useSession } from "next-auth/react";
 
 export default function AppHeader() {
@@ -8,11 +8,14 @@ export default function AppHeader() {
   const user = session.data?.user;
 
   return (
-    <header className="flex gap-4 items-center px-8 py-4 w-full h-full bg-content2 sticky top-0">
-      <h2>Emissor de NFe</h2>
+    <header className="flex gap-4 items-center px-4 sm:px-8 py-4 w-full h-full bg-content2 sticky top-0">
+      <h2 className="text-title-lg sm:text-title-2xl !font-bold">
+        Emissor de NFe
+      </h2>
 
-      <div className="flex gap-4 items-center ms-auto">
+      <div className="flex gap-2 sm:gap-4 items-center ms-auto">
         <User
+          classNames={{ wrapper: "hidden sm:inline-flex" }}
           avatarProps={{
             src: user?.image ?? undefined,
             name: user?.name ?? undefined,
@@ -21,15 +24,20 @@ export default function AppHeader() {
           description={user?.email}
         />
 
-        <Button
-          size="sm"
-          variant="light"
+        <Tooltip
+          content="Sair"
           color="danger"
-          onPress={() => signOut()}
-          startContent={<Icon icon="log-out" size="sm" />}
+          classNames={{ base: "pointer-events-none" }}
         >
-          Sair
-        </Button>
+          <Button
+            variant="light"
+            color="danger"
+            onPress={() => signOut()}
+            startContent={<Icon icon="log-out" size="sm" />}
+            isIconOnly
+            className="-me-2"
+          />
+        </Tooltip>
       </div>
     </header>
   );

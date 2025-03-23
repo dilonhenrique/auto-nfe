@@ -7,6 +7,7 @@ import {
   cn,
   DatePicker,
   Form,
+  Icon,
   Input,
   PasswordInput,
   SubmitButton,
@@ -17,6 +18,7 @@ import PageContainer from "../../ui/PageContainer/PageContainer";
 import { InvoiceUser } from "@/types/invoice";
 import { invoiceDataSchema } from "@/utils/schemas/invoiceData";
 import { now, getLocalTimeZone } from "@internationalized/date";
+import { MASKS } from "@/utils/masks/masks";
 
 export default function InvoiceEmitScreen() {
   const session = useSession();
@@ -48,7 +50,7 @@ export default function InvoiceEmitScreen() {
         <Input
           name="cnpj"
           label="Seu CNPJ"
-          mask={{ mask: "00.000.000/0000-00" }}
+          mask={MASKS.cnpj}
           defaultValue={process.env.NEXT_PUBLIC_USER_CNPJ}
         />
         <PasswordInput
@@ -81,7 +83,7 @@ export default function InvoiceEmitScreen() {
           name="cnpj"
           inputMode="decimal"
           label="CNPJ do tomador"
-          mask={{ mask: "00.000.000/0000-00" }}
+          mask={MASKS.cnpj}
           defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_CNPJ}
         />
         <DatePicker
@@ -99,14 +101,14 @@ export default function InvoiceEmitScreen() {
           name="tribNac"
           inputMode="decimal"
           label="Tributação Nacional"
-          mask={{ mask: "00.00.00" }}
+          mask={MASKS.tribNac}
           defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_TRIBNAC}
         />
         <Input
           name="nbs"
           inputMode="decimal"
           label="Código NBS"
-          mask={{ mask: "000000000" }}
+          mask={MASKS.nbs}
           defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_NBS}
         />
 
@@ -122,19 +124,13 @@ export default function InvoiceEmitScreen() {
           startContent={
             <span className="text-body-xs text-foreground-400 mb-0.5">R$</span>
           }
-          mask={{
-            mask: Number,
-            radix: ",",
-            thousandsSeparator: ".",
-            mapToRadix: ["."],
-            normalizeZeros: true,
-            padFractionalZeros: true,
-            scale: 2,
-          }}
+          mask={MASKS.decimal}
           defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_VALUE}
         />
 
-        <SubmitButton color="primary">Emitir Nota Fiscal</SubmitButton>
+        <SubmitButton color="primary" startContent={<Icon icon="invoice" size="sm" />}>
+          Emitir Nota Fiscal
+        </SubmitButton>
       </Form>
     </PageContainer>
   );

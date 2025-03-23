@@ -6,7 +6,7 @@ type Props = WithChildren & {
 
 export default function PageContainer({ children, className }: Props) {
   return (
-    <div className={cn("flex flex-col gap-4 items-start p-8", className)}>
+    <div className={cn("flex flex-col gap-4 items-start p-4 sm:p-8", className)}>
       {children}
     </div>
   );
