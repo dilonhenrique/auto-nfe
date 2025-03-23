@@ -119,6 +119,18 @@ export default function InvoiceEmitScreen() {
           name="value"
           inputMode="decimal"
           label="Valor da Nota"
+          startContent={
+            <span className="text-body-xs text-foreground-400 mb-0.5">R$</span>
+          }
+          mask={{
+            mask: Number,
+            radix: ",",
+            thousandsSeparator: ".",
+            mapToRadix: ["."],
+            normalizeZeros: true,
+            padFractionalZeros: true,
+            scale: 2,
+          }}
           defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_VALUE}
         />
 
