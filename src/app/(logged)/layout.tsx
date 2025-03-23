@@ -5,7 +5,8 @@ export default function LoggedLayout({ children }: WithChildren) {
   return (
     <div className="grid grid-rows-[4rem,_1fr]">
       <AppHeader />
-      {children}
+
+      <div className="overflow-x-auto">{children}</div>
     </div>
   );
 }

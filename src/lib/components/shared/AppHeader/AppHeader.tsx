@@ -8,7 +8,7 @@ export default function AppHeader() {
   const user = session.data?.user;
 
   return (
-    <header className="flex gap-4 items-center px-8 py-4 w-full h-full bg-content2">
+    <header className="flex gap-4 items-center px-8 py-4 w-full h-full bg-content2 sticky top-0">
       <h2>Emissor de NFe</h2>
 
       <div className="flex gap-4 items-center ms-auto">
