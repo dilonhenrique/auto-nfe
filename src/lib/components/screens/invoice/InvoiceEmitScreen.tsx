@@ -1,137 +1,50 @@
 "use client";
 
-import { invoiceActions } from "@/server/actions/invoice";
-import { invoiceUserSchema } from "@/utils/schemas/invoiceUser";
-import {
-  addToast,
-  cn,
-  DatePicker,
-  Form,
-  Icon,
-  Input,
-  PasswordInput,
-  SubmitButton,
-} from "@abstrato/hero-ui";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import PageContainer from "../../ui/PageContainer/PageContainer";
 import { InvoiceUser } from "@/types/invoice";
-import { invoiceDataSchema } from "@/utils/schemas/invoiceData";
-import { now, getLocalTimeZone } from "@internationalized/date";
-import { MASKS } from "@/utils/masks/masks";
+import InvoiceLoginForm from "./InvoiceLoginForm";
+import InvoiceEmitForm from "./InvoiceEmitForm";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function InvoiceEmitScreen() {
-  const session = useSession();
+  const session = useSession({ required: true });
   const user = session.data?.user;
 
   const [loggedUser, setLoggedUser] = useState<InvoiceUser>();
+
+  if (!user) return <></>;
 
   return (
     <PageContainer>
       <h1>Olá, {user?.name?.split(" ")[0]}!</h1>
 
-      <Form
-        className={cn("max-w-xl", loggedUser && "hidden")}
-        schema={invoiceUserSchema}
-        action={invoiceActions.login}
-        onSuccess={(res) => {
-          addToast({ title: res.message, color: "success" });
-          setLoggedUser(res.data);
-        }}
-        onError={({ response }) => {
-          addToast({ title: response?.message, color: "danger" });
-        }}
-      >
-        <Input
-          name="name"
-          label="Nome completo"
-          defaultValue={user?.name ?? undefined}
-        />
-        <Input
-          name="cnpj"
-          label="Seu CNPJ"
-          mask={MASKS.cnpj}
-          defaultValue={process.env.NEXT_PUBLIC_USER_CNPJ}
-        />
-        <PasswordInput
-          name="password"
-          label="Senha da NFe"
-          defaultValue={process.env.NEXT_PUBLIC_USER_PASS}
-        />
+      <AnimatePresence initial={false} mode="popLayout">
+        {!loggedUser && (
+          <motion.div
+            key="login-form"
+            className="max-w-xl w-full"
+            initial={{ opacity: 0, x: "5rem" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "-5rem" }}
+          >
+            <InvoiceLoginForm user={user} setLoggedUser={setLoggedUser} />
+          </motion.div>
+        )}
 
-        <SubmitButton color="primary" disabledWhenNotValid>
-          Entrar
-        </SubmitButton>
-      </Form>
-
-      <Form
-        className={cn("max-w-xl", !loggedUser && "hidden")}
-        schema={invoiceDataSchema}
-        action={(payload) => {
-          return invoiceActions.emit({ user: loggedUser, invoice: payload });
-        }}
-        onSuccess={(res) => {
-          console.log(res);
-          addToast({ title: res.message, color: "success" });
-        }}
-        onError={({ response }) => {
-          console.log(response);
-          addToast({ title: response?.message, color: "danger" });
-        }}
-      >
-        <Input
-          name="cnpj"
-          inputMode="decimal"
-          label="CNPJ do tomador"
-          mask={MASKS.cnpj}
-          defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_CNPJ}
-        />
-        <DatePicker
-          name="reference"
-          label="Data de referência"
-          maxValue={now(getLocalTimeZone())}
-        />
-
-        <Input
-          name="city"
-          label="Cidade"
-          defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_CITY}
-        />
-        <Input
-          name="tribNac"
-          inputMode="decimal"
-          label="Tributação Nacional"
-          mask={MASKS.tribNac}
-          defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_TRIBNAC}
-        />
-        <Input
-          name="nbs"
-          inputMode="decimal"
-          label="Código NBS"
-          mask={MASKS.nbs}
-          defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_NBS}
-        />
-
-        <Input
-          name="pix"
-          label="Chave PIX"
-          defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_PIX}
-        />
-        <Input
-          name="value"
-          inputMode="decimal"
-          label="Valor da Nota"
-          startContent={
-            <span className="text-body-xs text-foreground-400 mb-0.5">R$</span>
-          }
-          mask={MASKS.decimal}
-          defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_VALUE}
-        />
-
-        <SubmitButton color="primary" startContent={<Icon icon="invoice" size="sm" />}>
-          Emitir Nota Fiscal
-        </SubmitButton>
-      </Form>
+        {loggedUser && (
+          <motion.div
+            key="emit-form"
+            className="max-w-xl w-full"
+            initial={{ opacity: 0, x: "5rem" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "-5rem" }}
+          >
+            <InvoiceEmitForm loggedUser={loggedUser} className="max-w-xl" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageContainer>
   );
 }

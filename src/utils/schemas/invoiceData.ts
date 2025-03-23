@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { isValidDecimal } from "../validators/decimal";
-import { parseDecimal } from "../parsers/decimal";
 import { isTribNac } from "../validators/tribNac";
 import { isValidNbs } from "../validators/nbs";
 import { cnpjSchema } from "./cnpj";
@@ -10,8 +9,7 @@ export const invoiceDataSchema = z.object({
   value: z
     .string()
     .min(1, "Obrigatório")
-    .refine(isValidDecimal, "Valor inválido")
-    .transform(parseDecimal),
+    .refine(isValidDecimal, "Valor inválido"),
   pix: z
     .string({
       required_error: "Obrigatório",

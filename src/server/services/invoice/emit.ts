@@ -31,6 +31,7 @@ export default async function emit({ user, invoice }: Payload) {
     value: parseCurrency(invoice.value),
   });
 
+  // const url = await emitter.emitAndDownload();
   const url = await emitter.downloadLastInvoice();
 
   return { success: true, data: { url, resume } };

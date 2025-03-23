@@ -1,5 +1,6 @@
 import { ActionException } from "@/exceptions/actionException";
 import { invoiceServices } from "@/server/services/invoice";
+import { parseDecimal } from "@/utils/parsers/decimal";
 import { invoiceDataSchema } from "@/utils/schemas/invoiceData";
 import { invoiceUserSchema } from "@/utils/schemas/invoiceUser";
 import { createAction } from "@/utils/server/actions/createAction";
@@ -11,7 +12,10 @@ const schema = z.object({
 });
 
 export default createAction({ schema }).execute(async (payload) => {
-  const response = await invoiceServices.emit(payload);
+  const response = await invoiceServices.emit({
+    ...payload,
+    invoice: { ...payload.invoice, value: parseDecimal(payload.invoice.value) },
+  });
 
   if (!response.success) throw new ActionException(response.error?.code);
 

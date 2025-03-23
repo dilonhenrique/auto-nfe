@@ -17,8 +17,8 @@ export default function AppHeader() {
         <User
           classNames={{ wrapper: "hidden sm:inline-flex" }}
           avatarProps={{
-            src: user?.image ?? undefined,
-            name: user?.name ?? undefined,
+            src: user?.image,
+            name: user?.name,
           }}
           name={user?.name}
           description={user?.email}
