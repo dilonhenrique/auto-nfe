@@ -23,14 +23,17 @@ export class LoginInvoice {
 
   private async checkIsLogged() {
     return new Promise<boolean>((resolve) => {
-      this.page
-        .locator(".alert-warning ::-p-text(Usuário e/ou senha inválidos)")
-        .wait()
-        .then(() => resolve(false));
-      this.page
-        .locator(".navbar-brand.completa")
-        .wait()
-        .then(() => resolve(true));
+      try {
+        this.page
+          .locator(".alert-warning ::-p-text(Usuário e/ou senha inválidos)")
+          .wait()
+          .then(() => resolve(false));
+        this.page
+          .locator(".navbar-brand.completa")
+          .wait()
+          .then(() => resolve(true));
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (e) {}
     });
   }
 
