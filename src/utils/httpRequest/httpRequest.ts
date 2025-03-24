@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
-interface HttpRequestOptions extends RequestInit {
+export interface HttpRequestOptions extends RequestInit {
   method?: HttpMethod;
   headers?: Record<string, string>;
   body?: any;
 }
 
-type HttpSuccess<T> = {
+export type HttpSuccess<T> = {
   success: true;
   data: T;
   error?: never;
 };
 
-type HttpError = {
+export type HttpError = {
   success: false;
   data?: never;
   error: {

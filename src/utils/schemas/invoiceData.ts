@@ -17,20 +17,34 @@ export const invoiceDataSchema = z.object({
     })
     .min(1, "Obrigatório"),
   cnpj: cnpjSchema,
-  tribNac: z
-    .string()
-    .min(8, "Deve ter pelo menos 6 dígitos")
-    .max(8)
-    .refine(isTribNac, "Código inválido"),
+  tribNac: z.object({
+    id: z
+      .string({
+        required_error: "Obrigatório",
+        invalid_type_error: "Código inválido",
+      })
+      .min(8, "Deve ter pelo menos 6 dígitos")
+      .max(8)
+      .refine(isTribNac, "Código inválido"),
+    // name: z.string(),
+  }),
   nbs: z
     .string()
     .min(9, "Deve ter pelo menos 9 dígitos")
     .max(9)
     .refine(isValidNbs, "Código inválido"),
-  city: z
-    .string({
-      required_error: "Obrigatório",
-      invalid_type_error: "Cidade inválida",
-    })
-    .min(1, "Obrigatório"),
+  city: z.object({
+    // id: z
+    //   .string({
+    //     required_error: "Obrigatório",
+    //     invalid_type_error: "Cidade inválida",
+    //   })
+    //   .min(1, "Obrigatório"),
+    name: z
+      .string({
+        required_error: "Obrigatório",
+        invalid_type_error: "Cidade inválida",
+      })
+      .min(1, "Obrigatório"),
+  }),
 });

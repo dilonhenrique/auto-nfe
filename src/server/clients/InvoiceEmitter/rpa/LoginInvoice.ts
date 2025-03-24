@@ -45,6 +45,12 @@ export class LoginInvoice {
     await this.page.locator("input[name=Senha]").fill(user.password);
 
     await this.clickSubmit();
-    return await this.checkIsLogged();
+    const isLogged = await this.checkIsLogged();
+
+    if (isLogged) {
+      return await this.page.browserContext().cookies();
+    }
+
+    return null;
   }
 }

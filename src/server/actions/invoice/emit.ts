@@ -14,7 +14,12 @@ const schema = z.object({
 export default createAction({ schema }).execute(async (payload) => {
   const response = await invoiceServices.emit({
     ...payload,
-    invoice: { ...payload.invoice, value: parseDecimal(payload.invoice.value) },
+    invoice: {
+      ...payload.invoice,
+      value: parseDecimal(payload.invoice.value),
+      tribNac: payload.invoice.tribNac.id,
+      city: payload.invoice.city.name,
+    },
   });
 
   if (!response.success) throw new ActionException(response.error?.code);

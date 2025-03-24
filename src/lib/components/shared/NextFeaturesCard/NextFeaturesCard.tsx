@@ -7,7 +7,7 @@ export default function NextFeaturesCard() {
         <h3 className="text-foreground-600">Próximas features:</h3>
       </CardHeader>
 
-      <CardBody className="px-6 pb-10 gap-2">
+      <CardBody className="px-6 pb-8 gap-2">
         <Checkbox isReadOnly isSelected color="success" radius="full">
           Emissão manual das Notas
         </Checkbox>

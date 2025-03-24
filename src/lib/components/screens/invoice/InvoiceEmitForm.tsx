@@ -11,8 +11,11 @@ import {
   SubmitButton,
 } from "@abstrato/hero-ui";
 import { getLocalTimeZone, now } from "@internationalized/date";
-import { useState } from "react";
 import { getLastMonth } from "@/utils/getLastMonth";
+import AutocompleteService from "../../ui/Autocompletes/AutocompleteService";
+import AutocompleteCity from "../../ui/Autocompletes/AutocompleteCity";
+import Values from "../../shared/testing/Values";
+import CompanyInput from "../../ui/CompanyInput/CompanyInput";
 
 type ResponseData = {
   url: string;
@@ -30,18 +33,16 @@ export default function InvoiceEmitForm({
   className,
   onSuccess,
 }: Props) {
-  const [isOpen, setOpen] = useState(false);
-
   return (
     <Form
       className={className}
       schema={invoiceDataSchema}
       action={(payload) => {
+        console.log(payload);
         return invoiceActions.emit({ user: loggedUser, invoice: payload });
       }}
       onSuccess={(res) => {
         console.log(res);
-        setOpen(true);
         onSuccess?.(res.data);
       }}
       onError={({ response }) => {
@@ -49,11 +50,9 @@ export default function InvoiceEmitForm({
         addToast({ title: response?.message, color: "danger" });
       }}
     >
-      <Input
+      <CompanyInput
         name="cnpj"
-        inputMode="decimal"
         label="CNPJ do tomador"
-        mask={MASKS.cnpj}
         defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_CNPJ}
         autoFocus
       />
@@ -65,22 +64,36 @@ export default function InvoiceEmitForm({
         defaultValue={getLastMonth()}
       />
 
-      <Input
+      {/* <Input
         name="city"
         label="Cidade"
         defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_CITY}
+      /> */}
+      <AutocompleteCity
+        name="city.id"
+        placeholder="Digite 3 caracteres para realizar uma busca"
+        label="Município de incidência do ISSQN"
+        defaultSelectedKey={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_CITY}
       />
-      <Input
+
+      {/* <Input
         name="tribNac"
         inputMode="decimal"
         label="Tributação Nacional"
         mask={MASKS.tribNac}
         defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_TRIBNAC}
+      /> */}
+      <AutocompleteService
+        name="tribNac.id"
+        placeholder="Digite 3 caracteres para realizar uma busca"
+        label="Código de Tributação Nacional"
+        defaultSelectedKey={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_TRIBNAC}
       />
+
       <Input
         name="nbs"
         inputMode="decimal"
-        label="Código NBS"
+        label="Item da NBS correspondente ao serviço prestado"
         mask={MASKS.nbs}
         defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_NBS}
       />
@@ -100,6 +113,8 @@ export default function InvoiceEmitForm({
         mask={MASKS.decimal}
         defaultValue={process.env.NEXT_PUBLIC_INVOICE_DEFAULT_VALUE}
       />
+
+      <Values />
 
       <SubmitButton
         color="primary"
