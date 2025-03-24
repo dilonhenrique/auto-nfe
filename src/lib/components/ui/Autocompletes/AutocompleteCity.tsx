@@ -39,6 +39,7 @@ export default function AutocompleteCity({
         setValue(props.name!, res?.[0].id);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onInputChange = debounce(search, 500);

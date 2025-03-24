@@ -28,6 +28,7 @@ export default function CompanyInput(props: InputProps) {
     if (typeof props.defaultValue === "string") {
       search(props.defaultValue);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onInputChange = debounce(search, 500);
@@ -43,7 +44,7 @@ export default function CompanyInput(props: InputProps) {
         }}
       />
       {company && (
-        <p className="text-foreground-500 flex gap-2 items-center ms-1">
+        <p className="text-foreground-500 flex gap-1 items-center ms-1">
           <Icon icon="check-circle" size="sm" color="success" />
           {startCase(company?.toLowerCase())}
         </p>
